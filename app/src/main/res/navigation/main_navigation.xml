@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/startAppFragment">
+
+    <fragment
+        android:id="@+id/allDisneyHeroFragment"
+        android:name="com.example.sleepappapi.ui.allBase.AllDisneyHeroFragment"
+        android:label="AllDisneyHeroFragment"
+        tools:layout="@layout/fragment_all_disney_hero">
+        <action
+            android:id="@+id/action_allDisneyHeroFragment_to_oneHeroCardFragment"
+            app:destination="@id/oneHeroCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/oneHeroCardFragment"
+        android:name="com.example.sleepappapi.ui.hero.OneHeroCardFragment"
+        android:label="OneHeroCardFragment"
+        tools:layout="@layout/fragment_card_hero">
+        <action
+            android:id="@+id/action_oneHeroCardFragment_to_allDisneyHeroFragment"
+            app:destination="@id/allDisneyHeroFragment"
+            app:enterAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/startAppFragment"
+        android:name="com.example.sleepappapi.ui.StartAppFragment"
+        android:label="StartAppFragment"
+        tools:layout="@layout/fragment_start_app">
+        <action
+            android:id="@+id/action_startAppFragment_to_allDisneyHeroFragment"
+            app:destination="@id/allDisneyHeroFragment"
+            app:enterAnim="@anim/flip_right_enter"
+            app:exitAnim="@anim/flip_left_exit" />
+    </fragment>
+</navigation>
