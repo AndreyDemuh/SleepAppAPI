@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+//    id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -53,8 +53,8 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     //hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+//    implementation "com.google.dagger:hilt-android:2.44"
+//    kapt "com.google.dagger:hilt-compiler:2.44"
     //okhttp
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
@@ -78,7 +78,7 @@ dependencies {
     //Lottie
     implementation 'com.airbnb.android:lottie:5.2.0'
 
-
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     // Navigation
     def nav_version = "2.5.1"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -89,4 +89,8 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    //Dagger
+    implementation 'com.google.dagger:dagger:2.44'
+    kapt 'com.google.dagger:dagger-compiler:2.44'
     }

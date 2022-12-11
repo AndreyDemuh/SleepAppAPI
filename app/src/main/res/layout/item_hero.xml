@@ -49,7 +49,7 @@
             android:fontFamily="@font/headland_one"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold"
-            tools:text="Тут какой то текст" />
+            tools:text="@string/name" />
 
     </LinearLayout>
 

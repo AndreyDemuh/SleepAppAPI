@@ -1,28 +1,47 @@
 package com.example.sleepappapi.ui.hero
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.sleepappapi.App
+import com.example.sleepappapi.InfoHero
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentCardHeroBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.sleepappapi.repository.HeroesRepository
+import com.example.sleepappapi.ui.oneHero.OneHeroViewModelFactory
+import com.example.sleepappapi.ui.oneHero.adapter.InfoHeroAdapter
+import javax.inject.Inject
 
-private const val ID_HERO = "idHero"
-
-@AndroidEntryPoint
 class OneHeroCardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardHeroBinding
-    private val viewModel: OneHeroViewModel by viewModels()
+
+    @Inject
+    lateinit var oneHeroViewModelFactory: OneHeroViewModelFactory
+
+    private val viewModel: OneHeroViewModel by viewModels {
+        oneHeroViewModelFactory
+    }
+
+    @Inject
+    lateinit var repository: HeroesRepository
+
+    val args: OneHeroCardFragmentArgs by navArgs()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        App.applicationComponent.injectOneHero(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,25 +75,27 @@ class OneHeroCardFragment : Fragment() {
         binding.btnLike.setOnClickListener {
             viewModel.chooseHeroFavourite()
         }
-        viewModel.imageHeroUrl.observe(viewLifecycleOwner) {
-            Glide.with(requireContext())
-                .load(it)
-                .into(binding.imageHeroCard)
+        viewModel.run {
+            imageHeroUrl.observe(viewLifecycleOwner) {
+                Glide.with(requireContext())
+                    .load(it.imageUrl)
+                    .centerCrop()
+                    .into(binding.imageHeroCard)
+                setList(it.listInfo)
+            }
+            binding.tvNameHero.text = args.nameHero
         }
-
-        arguments?.getString(ID_HERO)?.let {
-            Log.d("MyLog", "getString arguments: $it")
-            viewModel.getImageOneHeroInfo(it)
-        }
+        viewModel.getImageOneHeroInfo(args.idHero)
     }
 
-    companion object {
-
-        fun getHeroFragmentInstance(id: String): OneHeroCardFragment {
-            return OneHeroCardFragment().apply {
-                Log.d("MyLog", "getHeroFragmentInstance $id")
-                arguments = bundleOf(ID_HERO to id)
+    private fun setList(list: ArrayList<InfoHero>) {
+        binding.heroInfoRV.run {
+            if (adapter == null) {
+                adapter = InfoHeroAdapter()
+                layoutManager = LinearLayoutManager(requireContext())
             }
+            (adapter as? InfoHeroAdapter)?.submitList(list)
         }
+
     }
 }

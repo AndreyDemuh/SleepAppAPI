@@ -7,6 +7,9 @@
     <string name="todo">TODO</string>
     <string name="ok">OK</string>
     <string name="title">Title</string>
+    <string name="internet_error">Проверьте подключение к Интернету</string>
+    <string name="name_category">Name category</string>
+    <string name="name">name</string>
 
     <integer name="anim_flip_duration_full">1000</integer>
     <integer name="anim_flip_duration_half">500</integer>

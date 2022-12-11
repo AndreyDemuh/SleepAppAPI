@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.example.sleepappapi.databinding.ViewAddHeroBinding
 
-class MessageView(context: Context, attrs: AttributeSet): LinearLayout(context, attrs) {
+class MessageView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     private var binding: ViewAddHeroBinding
 

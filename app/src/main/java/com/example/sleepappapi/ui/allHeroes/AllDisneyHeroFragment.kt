@@ -1,7 +1,7 @@
 package com.example.sleepappapi.ui.allBase
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +11,35 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.sleepappapi.R
+import com.example.sleepappapi.App
 import com.example.sleepappapi.databinding.FragmentAllDisneyHeroBinding
 import com.example.sleepappapi.model.CharactersHero
-import com.example.sleepappapi.ui.adapter.allBase.AllHeroesAdapter
-import com.example.sleepappapi.ui.hero.OneHeroCardFragment.Companion.getHeroFragmentInstance
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.sleepappapi.repository.HeroesRepository
+import com.example.sleepappapi.ui.allHeroes.AllHeroesViewModelFactory
+import com.example.sleepappapi.ui.allHeroes.adapter.AllHeroesAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-@AndroidEntryPoint
+
 class AllDisneyHeroFragment : Fragment() {
 
     private lateinit var binding: FragmentAllDisneyHeroBinding
-    private val viewModel: AllCharactersViewModel by viewModels()
+
+    @Inject
+    lateinit var allHeroesViewModelFactory: AllHeroesViewModelFactory
+
+    private val viewModel: AllCharactersViewModel by viewModels {
+        allHeroesViewModelFactory
+    }
+
+    @Inject
+    lateinit var repository: HeroesRepository
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        App.applicationComponent.injectAllHero(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,10 +79,12 @@ class AllDisneyHeroFragment : Fragment() {
         binding.recyclerAllHero.run {
             if (adapter == null) {
                 adapter = AllHeroesAdapter {
-                    getHeroFragmentInstance(it.imageUrl.toString())
-                    Log.d("MyLog", "InitHero ${it.imageUrl.toString()}")
                     findNavController().navigate(
-                        R.id.action_allDisneyHeroFragment_to_oneHeroCardFragment
+                        AllDisneyHeroFragmentDirections
+                            .actionAllDisneyHeroFragmentToOneHeroCardFragment(
+                                it._id.toString(),
+                                it.name
+                            )
                     )
                 }
                 layoutManager = GridLayoutManager(requireContext(), 2)
