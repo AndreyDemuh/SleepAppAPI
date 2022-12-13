@@ -18,7 +18,7 @@
             android:id="@+id/cardHero"
             android:layout_width="@dimen/dp_170"
             android:layout_height="@dimen/dp_170"
-            app:cardCornerRadius="@dimen/dp_20">
+            app:cardCornerRadius="@dimen/dp_20" >
 
             <ImageView
                 android:id="@+id/imageHero"

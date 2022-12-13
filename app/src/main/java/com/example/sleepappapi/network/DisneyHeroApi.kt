@@ -17,5 +17,4 @@ interface DisneyHeroApi {
 
     @GET("/characters/{id}")
     suspend fun getImageHero(@Path("id") id: String): Response<CharactersHero>
-
 }

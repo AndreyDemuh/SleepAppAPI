@@ -16,5 +16,5 @@
         android:propertyName="alpha"
         android:startOffset="@integer/anim_flip_duration_half"
         android:valueFrom="0.0"
-        android:valueTo="1.0" />
+        android:valueTo="1.0"  />
 </set>

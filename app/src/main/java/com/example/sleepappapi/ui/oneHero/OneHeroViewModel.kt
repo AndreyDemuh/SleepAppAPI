@@ -2,21 +2,18 @@ package com.example.sleepappapi.ui.hero
 
 import androidx.lifecycle.*
 import com.example.sleepappapi.Hero
-import com.example.sleepappapi.model.CharactersHero
 import com.example.sleepappapi.repository.HeroesRepository
 import com.example.sleepappapi.utils.toHero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
-class OneHeroViewModel (
+class OneHeroViewModel(
     private val repository: HeroesRepository
 ) : ViewModel() {
 
     val imageHeroUrl = MutableLiveData<Hero>()
 
     var isHeroFavourite = MutableLiveData<Boolean>(false)
-
 
     fun getImageOneHeroInfo(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -29,17 +26,17 @@ class OneHeroViewModel (
         }
     }
 
-    fun addHeroToFavourite(hero: CharactersHero) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.insertHeroToFavourite(hero)
-        }
-    }
-
-    fun deleteHeroFromFavourite(hero: CharactersHero) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteHeroFromFavourite(hero)
-        }
-    }
+//    fun addHeroToFavourite(hero: CharactersHero) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repository.insertHeroToFavourite(hero)
+//        }
+//    }
+//
+//    fun deleteHeroFromFavourite(hero: CharactersHero) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repository.deleteHeroFromFavourite(hero)
+//        }
+//    }
 
     fun chooseHeroFavourite() {
         if (isHeroFavourite.value == true) {

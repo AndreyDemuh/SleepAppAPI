@@ -1,46 +1,42 @@
 package com.example.sleepappapi.ui.hero
 
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.sleepappapi.App
 import com.example.sleepappapi.InfoHero
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentCardHeroBinding
-import com.example.sleepappapi.repository.HeroesRepository
-import com.example.sleepappapi.ui.oneHero.OneHeroViewModelFactory
 import com.example.sleepappapi.ui.oneHero.adapter.InfoHeroAdapter
-import javax.inject.Inject
+import com.example.sleepappapi.ui.oneHero.oneHeroModule
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
+
 
 class OneHeroCardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardHeroBinding
 
-    @Inject
-    lateinit var oneHeroViewModelFactory: OneHeroViewModelFactory
-
-    private val viewModel: OneHeroViewModel by viewModels {
-        oneHeroViewModelFactory
-    }
-
-    @Inject
-    lateinit var repository: HeroesRepository
+    private val viewModel: OneHeroViewModel by viewModel()
 
     val args: OneHeroCardFragmentArgs by navArgs()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.applicationComponent.injectOneHero(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loadKoinModules(oneHeroModule)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        unloadKoinModules(oneHeroModule)
     }
 
     override fun onCreateView(

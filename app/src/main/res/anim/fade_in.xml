@@ -2,4 +2,4 @@
     android:duration="@android:integer/config_shortAnimTime"
     android:fromAlpha="0"
     android:interpolator="@android:anim/decelerate_interpolator"
-    android:toAlpha="1" />
+    android:toAlpha="1"  />

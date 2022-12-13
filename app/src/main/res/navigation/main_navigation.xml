@@ -14,7 +14,7 @@
             android:id="@+id/action_allDisneyHeroFragment_to_oneHeroCardFragment"
             app:destination="@id/oneHeroCardFragment"
             app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out" />
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/oneHeroCardFragment"

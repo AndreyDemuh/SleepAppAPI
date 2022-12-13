@@ -7,7 +7,7 @@ import com.example.sleepappapi.model.CharactersHero
 
 class AllHeroesViewHolder(
     private val binding: ItemHeroBinding
-) : RecyclerView.ViewHolder(binding.root) {
+)  : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(hero: CharactersHero) {
         binding.nameHero.text = hero.name

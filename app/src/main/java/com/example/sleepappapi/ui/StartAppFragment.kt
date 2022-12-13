@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentStartAppBinding
 
-
 class StartAppFragment : Fragment() {
 
     private lateinit var binding: FragmentStartAppBinding

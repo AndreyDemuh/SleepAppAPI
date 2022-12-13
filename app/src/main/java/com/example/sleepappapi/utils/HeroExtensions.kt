@@ -5,6 +5,7 @@ import com.example.sleepappapi.InfoHero
 import com.example.sleepappapi.model.CharactersHero
 
 fun CharactersHero.toHero(): Hero {
+
     val list = arrayListOf<InfoHero>()
     if (allies?.isNotEmpty() == true) {
         list.add(InfoHero("Allies", allies))

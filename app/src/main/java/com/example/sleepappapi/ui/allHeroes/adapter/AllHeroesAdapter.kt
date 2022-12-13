@@ -8,7 +8,7 @@ import com.example.sleepappapi.model.CharactersHero
 
 class AllHeroesAdapter(
     private val onClick: (hero: CharactersHero) -> Unit
-) :
+)  :
     PagingDataAdapter<CharactersHero, AllHeroesViewHolder>(AllHeroUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllHeroesViewHolder {

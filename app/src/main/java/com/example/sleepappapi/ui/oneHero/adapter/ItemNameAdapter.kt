@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.sleepappapi.databinding.ItemNameCategoryBinding
 
 class ItemNameAdapter : ListAdapter<String, ItemNameViewHolder>(ItemNameDiffUtil()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemNameViewHolder {
         return ItemNameViewHolder(
             ItemNameCategoryBinding.inflate(

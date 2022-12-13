@@ -10,7 +10,7 @@ import com.google.android.flexbox.JustifyContent
 
 class InfoHeroViewHolder(
     private val binding: ItemListInfoBinding
-) : RecyclerView.ViewHolder(binding.root) {
+) :  RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: InfoHero) {
         binding.titleCategory.text = item.title

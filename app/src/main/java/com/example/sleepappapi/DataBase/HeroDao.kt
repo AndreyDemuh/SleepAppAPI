@@ -9,7 +9,6 @@ import com.example.sleepappapi.model.CharactersHero
 @Dao
 interface HeroDao {
 
-
     @Insert
     suspend fun insertHero(hero: CharactersHero)
 

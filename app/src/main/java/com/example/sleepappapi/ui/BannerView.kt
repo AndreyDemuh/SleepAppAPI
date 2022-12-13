@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.LinearLayout
 import com.example.sleepappapi.databinding.ViewBannerInternetErrorBinding
 
-
 class BannerView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     private var binding: ViewBannerInternetErrorBinding

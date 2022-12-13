@@ -13,15 +13,4 @@ class MessageView(context: Context, attrs: AttributeSet) : LinearLayout(context,
     init {
         binding = ViewAddHeroBinding.inflate(LayoutInflater.from(context), this, true)
     }
-
-//    fun setTitle(title: String) {
-//        binding.message.text = title
-//    }
-//
-//    fun setClickClose(onClick: () -> Unit) {
-//        binding.close.setOnClickListener {
-//            this.visibility = View.GONE
-//            onClick()
-//        }
-//    }
 }

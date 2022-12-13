@@ -6,7 +6,7 @@ import com.example.sleepappapi.model.CharactersHero
 class AllHeroUtilCallback : DiffUtil.ItemCallback<CharactersHero>() {
     override fun areItemsTheSame(
         oldItem: CharactersHero, newItem: CharactersHero
-    ): Boolean {
+    ) : Boolean {
         return oldItem._id == newItem._id
     }
 

@@ -5,7 +5,7 @@ import com.example.sleepappapi.databinding.ItemNameCategoryBinding
 
 class ItemNameViewHolder(
     private val binding: ItemNameCategoryBinding
-) : RecyclerView.ViewHolder(binding.root) {
+)  : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: String) {
         binding.itemNameText.text = item

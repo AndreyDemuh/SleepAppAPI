@@ -1,44 +1,38 @@
 package com.example.sleepappapi.ui.allBase
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.sleepappapi.App
 import com.example.sleepappapi.databinding.FragmentAllDisneyHeroBinding
 import com.example.sleepappapi.model.CharactersHero
-import com.example.sleepappapi.repository.HeroesRepository
-import com.example.sleepappapi.ui.allHeroes.AllHeroesViewModelFactory
+import com.example.sleepappapi.ui.allHeroes.allHeroModule
 import com.example.sleepappapi.ui.allHeroes.adapter.AllHeroesAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
 
 class AllDisneyHeroFragment : Fragment() {
 
     private lateinit var binding: FragmentAllDisneyHeroBinding
 
-    @Inject
-    lateinit var allHeroesViewModelFactory: AllHeroesViewModelFactory
+    private val viewModel: AllCharactersViewModel by viewModel()
 
-    private val viewModel: AllCharactersViewModel by viewModels {
-        allHeroesViewModelFactory
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loadKoinModules(allHeroModule)
     }
 
-    @Inject
-    lateinit var repository: HeroesRepository
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.applicationComponent.injectAllHero(this)
+    override fun onDetach() {
+        super.onDetach()
+        unloadKoinModules(allHeroModule)
     }
 
     override fun onCreateView(
