@@ -9,7 +9,6 @@ object HeroDataBase {
 
     lateinit var HeroDB: AppDataBase
 
-    //инициализируем базу данных
     fun initDB(context: Context) {
         HeroDB = Room.databaseBuilder(
             context,

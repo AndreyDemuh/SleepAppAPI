@@ -1,21 +1,19 @@
 package com.example.sleepappapi.ui.hero
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.sleepappapi.Hero
+import com.example.sleepappapi.model.CharactersHero
 import com.example.sleepappapi.repository.HeroesRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.sleepappapi.utils.toHero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class OneHeroViewModel @Inject constructor(
+
+class OneHeroViewModel (
     private val repository: HeroesRepository
 ) : ViewModel() {
 
-    val imageHeroUrl = MutableLiveData<String>()
+    val imageHeroUrl = MutableLiveData<Hero>()
 
     var isHeroFavourite = MutableLiveData<Boolean>(false)
 
@@ -24,20 +22,28 @@ class OneHeroViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getImageDisneyHero(id)
             if (response.isSuccessful) {
-                Log.d(
-                    "MyLog",
-                    "getImageOneHeroInfo ${response.body()?.data?.firstOrNull()?.imageUrl.toString()}"
-                )
-                imageHeroUrl.postValue((response.body()?.data?.firstOrNull()?.imageUrl.toString()))
+                imageHeroUrl.postValue((response.body()?.toHero()))
             } else {
                 response.errorBody()
             }
         }
     }
 
+    fun addHeroToFavourite(hero: CharactersHero) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertHeroToFavourite(hero)
+        }
+    }
+
+    fun deleteHeroFromFavourite(hero: CharactersHero) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteHeroFromFavourite(hero)
+        }
+    }
+
     fun chooseHeroFavourite() {
         if (isHeroFavourite.value == true) {
-            //code add
+
         } else {
             //code add
         }

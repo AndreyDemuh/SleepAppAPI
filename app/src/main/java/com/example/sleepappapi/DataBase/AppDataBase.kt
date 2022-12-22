@@ -10,5 +10,5 @@ import com.example.sleepappapi.model.CharactersHero
 @TypeConverters(ConverterType::class)
 abstract class AppDataBase : RoomDatabase() {
 
-    abstract fun heroDao():HeroDao
+    abstract fun heroDao(): HeroDao
 }

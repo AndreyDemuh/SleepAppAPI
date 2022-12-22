@@ -8,25 +8,25 @@ import java.io.Serializable
 @Entity(tableName = "heroes")
 data class CharactersHero(
     @PrimaryKey
-    val _id: String,
+    val _id: Int,
     @ColumnInfo(name = "allies")
-    val allies: List<String>?,
+    val allies: ArrayList<String>?,
     @ColumnInfo(name = "enemies")
-    val enemies: List<String>?,
+    val enemies: ArrayList<String>?,
     @ColumnInfo(name = "films")
-    val films: List<String>?,
+    val films: ArrayList<String>?,
     @ColumnInfo(name = "imageUrl")
     val imageUrl: String?,
     @ColumnInfo(name = "name")
     val name: String?,
     @ColumnInfo(name = "parkAttractions")
-    val parkAttractions: List<String>?,
+    val parkAttractions: ArrayList<String>?,
     @ColumnInfo(name = "shortFilms")
-    val shortFilms: List<String>?,
+    val shortFilms: ArrayList<String>?,
     @ColumnInfo(name = "tvShows")
-    val tvShows: List<String>?,
+    val tvShows: ArrayList<String>?,
     @ColumnInfo(name = "url")
     val url: String?,
     @ColumnInfo(name = "videoGames")
-    val videoGames: List<String>?,
+    val videoGames: ArrayList<String>?,
 ) : Serializable

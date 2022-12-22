@@ -1,4 +1,4 @@
-package com.example.sleepappapi.ui.adapter.allBase
+package com.example.sleepappapi.ui.allHeroes.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

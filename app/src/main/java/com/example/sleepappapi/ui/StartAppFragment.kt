@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentStartAppBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class StartAppFragment : Fragment() {
 
     private lateinit var binding: FragmentStartAppBinding
