@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SleepAppAPI</string>
+    <string name="welcome">Welcome</string>
+    <string name="get_started">get started</string>
+    <string name="all">All</string>
+    <string name="my">My</string>
+    <string name="todo">TODO</string>
+    <string name="ok">OK</string>
+    <string name="title">Title</string>
+
+    <integer name="anim_flip_duration_full">1000</integer>
+    <integer name="anim_flip_duration_half">500</integer>
+
 </resources>
