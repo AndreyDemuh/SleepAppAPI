@@ -1,4 +1,4 @@
-package com.example.sleepappapi.ui.adapter.allBase
+package com.example.sleepappapi.ui.allHeroes.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,9 @@ import com.example.sleepappapi.databinding.ItemHeroBinding
 import com.example.sleepappapi.model.CharactersHero
 
 class AllHeroesAdapter(
-    private val onClick: (id: CharactersHero) -> Unit
-) :
-    PagingDataAdapter<CharactersHero, AllHeroesViewHolder>(AllHeroUtillCallback()) {
+    private val onClick: (hero: CharactersHero) -> Unit
+)  :
+    PagingDataAdapter<CharactersHero, AllHeroesViewHolder>(AllHeroUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllHeroesViewHolder {
         return AllHeroesViewHolder(
@@ -22,10 +22,10 @@ class AllHeroesAdapter(
     }
 
     override fun onBindViewHolder(holder: AllHeroesViewHolder, position: Int) {
-        getItem(position)?.let { CharactersHero ->
-            holder.bind(CharactersHero)
+        getItem(position)?.let { hero ->
+            holder.bind(hero)
             holder.itemView.setOnClickListener {
-                onClick(CharactersHero)
+                onClick(hero)
             }
         }
     }

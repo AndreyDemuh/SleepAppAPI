@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/title" />
+        tools:text="@string/title"/>
 
     <TextView
         android:id="@+id/ok"
@@ -27,7 +27,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_banner"
-        tools:ignore="PrivateResource"
         tools:text="@string/ok" />
 
 
