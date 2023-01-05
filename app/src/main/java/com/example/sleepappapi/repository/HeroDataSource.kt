@@ -5,8 +5,9 @@ import androidx.paging.PagingState
 import com.example.sleepappapi.model.CharactersHero
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class HeroDataSource (
+class HeroDataSource @Inject constructor(
     private val repository: HeroesRepository
 ) : PagingSource<Int, CharactersHero>() {
 

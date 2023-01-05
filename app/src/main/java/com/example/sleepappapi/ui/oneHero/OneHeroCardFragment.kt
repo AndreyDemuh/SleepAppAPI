@@ -5,39 +5,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.sleepappapi.Hero
 import com.example.sleepappapi.InfoHero
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentCardHeroBinding
+import com.example.sleepappapi.repository.SaveSharedPref
 import com.example.sleepappapi.ui.oneHero.adapter.InfoHeroAdapter
-import com.example.sleepappapi.ui.oneHero.oneHeroModule
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.unloadKoinModules
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class OneHeroCardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardHeroBinding
+    private val viewModel: OneHeroViewModel by viewModels()
+    private val args: OneHeroCardFragmentArgs by navArgs()
+    private var isFavouriteHeroIcon = false
 
-    private val viewModel: OneHeroViewModel by viewModel()
-
-    val args: OneHeroCardFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        loadKoinModules(oneHeroModule)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        unloadKoinModules(oneHeroModule)
-    }
+    lateinit var currentHero: Hero
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,33 +45,51 @@ class OneHeroCardFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.isHeroFavourite.observe(viewLifecycleOwner) {
-            binding.btnLike.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    if (it) {
-                        R.drawable.heart_like
-                    } else {
-                        R.drawable.heart_disslike
-                    }
-                )
-            )
+        binding.btnLike.setOnClickListener {
+            val saveShared = SaveSharedPref(requireContext())
+            if (!currentHero.isFavourite) {
+                binding.btnLike.setImageResource(R.drawable.heart_like)
+                saveShared.setFavourite(currentHero.id.toString(), true)
+                viewModel.chooseHeroFavourite(currentHero)
+                binding.messageView.visibility = View.VISIBLE
+                binding.messageView.setTitle("Герой успешно добавлен в избранное")
+                binding.messageView.setClickClose {
+                    binding.messageView.visibility = View.GONE
+                }
+            } else {
+                binding.btnLike.setImageResource(R.drawable.heart_disslike)
+                saveShared.setFavourite(currentHero.id.toString(), false)
+                viewModel.chooseHeroFavourite(currentHero)
+                binding.messageView.visibility = View.VISIBLE
+                binding.messageView.setTitle("Герой успешно удален из избранного")
+                binding.messageView.setClickClose {
+                    binding.messageView.visibility = View.GONE
+                }
+            }
             ObjectAnimator.ofFloat(binding.btnLike, View.ALPHA, 0.3F, 1F).start()
         }
-        binding.btnLike.setOnClickListener {
-            viewModel.chooseHeroFavourite()
-        }
+
         viewModel.run {
-            imageHeroUrl.observe(viewLifecycleOwner) {
+            val saveShared = SaveSharedPref(requireContext())
+            oneHero.observe(viewLifecycleOwner) {
+                currentHero = it
                 Glide.with(requireContext())
                     .load(it.imageUrl)
                     .centerCrop()
                     .into(binding.imageHeroCard)
                 setList(it.listInfo)
+                val booleanFavourite = saveShared.getFavourite(currentHero.id.toString())
+                if (isFavouriteHeroIcon != booleanFavourite) {
+                    binding.btnLike.setImageResource(R.drawable.heart_like)
+                    isFavouriteHeroIcon = true
+                } else {
+                    binding.btnLike.setImageResource(R.drawable.heart_disslike)
+                    isFavouriteHeroIcon = false
+                }
             }
             binding.tvNameHero.text = args.nameHero
         }
-        viewModel.getImageOneHeroInfo(args.idHero)
+        viewModel.getInfoOneHero(args.idHero)
     }
 
     private fun setList(list: ArrayList<InfoHero>) {
@@ -92,6 +100,5 @@ class OneHeroCardFragment : Fragment() {
             }
             (adapter as? InfoHeroAdapter)?.submitList(list)
         }
-
     }
 }

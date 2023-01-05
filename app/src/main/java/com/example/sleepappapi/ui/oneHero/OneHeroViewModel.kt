@@ -1,50 +1,57 @@
 package com.example.sleepappapi.ui.hero
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sleepappapi.Hero
 import com.example.sleepappapi.repository.HeroesRepository
 import com.example.sleepappapi.utils.toHero
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OneHeroViewModel(
+@HiltViewModel
+class OneHeroViewModel @Inject constructor(
     private val repository: HeroesRepository
 ) : ViewModel() {
 
-    val imageHeroUrl = MutableLiveData<Hero>()
+    val oneHero = MutableLiveData<Hero>()
 
-    var isHeroFavourite = MutableLiveData<Boolean>(false)
+    var isHeroFavourite = MutableLiveData(false)
 
-    fun getImageOneHeroInfo(id: String) {
+    fun getInfoOneHero(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getImageDisneyHero(id)
             if (response.isSuccessful) {
-                imageHeroUrl.postValue((response.body()?.toHero()))
+                oneHero.postValue((response.body()?.toHero()))
             } else {
                 response.errorBody()
             }
         }
     }
 
-//    fun addHeroToFavourite(hero: CharactersHero) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.insertHeroToFavourite(hero)
-//        }
-//    }
-//
-//    fun deleteHeroFromFavourite(hero: CharactersHero) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.deleteHeroFromFavourite(hero)
-//        }
-//    }
-
-    fun chooseHeroFavourite() {
-        if (isHeroFavourite.value == true) {
-
-        } else {
-            //code add
+    fun addFavouriteHero(hero: Hero) {
+        viewModelScope.launch(Dispatchers.IO) {
+            hero.isFavourite = true
+            repository.insertHeroToFavourite(hero)
         }
-        isHeroFavourite.value = !(isHeroFavourite.value ?: false)
+    }
+
+    fun deleteFavouriteHero(hero: Hero) {
+        viewModelScope.launch(Dispatchers.IO) {
+            hero.isFavourite = false
+            repository.deleteHeroFromFavourite(hero)
+        }
+    }
+
+    fun chooseHeroFavourite(hero: Hero) {
+        if (isHeroFavourite.value == true) {
+            deleteFavouriteHero(hero)
+        } else {
+            addFavouriteHero(hero)
+        }
+        isHeroFavourite.value = !(isHeroFavourite.value ?: true)
     }
 }
 

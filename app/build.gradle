@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-//    id 'dagger.hilt.android.plugin'
+    id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -53,8 +53,8 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     //hilt
-//    implementation "com.google.dagger:hilt-android:2.44"
-//    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
     //okhttp
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
@@ -80,7 +80,6 @@ dependencies {
 
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     // Navigation
-
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
     //Pagging
@@ -94,7 +93,7 @@ dependencies {
 //    implementation 'org.koin:koin-android:3.2.0'
 //    implementation 'org.koin:koin-android-viewmodel:3.2.0'
 //    implementation 'org.koin:koin-android-scope:3.2.0'
-    implementation 'io.insert-koin:koin-android:3.1.2'
+//    implementation 'io.insert-koin:koin-android:3.1.2'
 
     //Dagger
 //    implementation 'com.google.dagger:dagger:2.44'

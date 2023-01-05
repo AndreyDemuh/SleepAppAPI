@@ -5,7 +5,6 @@ import com.example.sleepappapi.InfoHero
 import com.example.sleepappapi.model.CharactersHero
 
 fun CharactersHero.toHero(): Hero {
-
     val list = arrayListOf<InfoHero>()
     if (allies?.isNotEmpty() == true) {
         list.add(InfoHero("Allies", allies))
@@ -28,5 +27,5 @@ fun CharactersHero.toHero(): Hero {
     if (videoGames?.isNotEmpty() == true) {
         list.add(InfoHero("Video Games", videoGames))
     }
-    return Hero(_id, name, imageUrl, list)
+    return Hero(_id, name, imageUrl, list, false)
 }
