@@ -1,4 +1,4 @@
-package com.example.sleepappapi.ui.adapter.allBase
+package com.example.sleepappapi.ui.allHeroes.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -7,7 +7,7 @@ import com.example.sleepappapi.model.CharactersHero
 
 class AllHeroesViewHolder(
     private val binding: ItemHeroBinding
-) : RecyclerView.ViewHolder(binding.root) {
+)  : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(hero: CharactersHero) {
         binding.nameHero.text = hero.name

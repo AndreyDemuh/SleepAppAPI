@@ -78,15 +78,24 @@ dependencies {
     //Lottie
     implementation 'com.airbnb.android:lottie:5.2.0'
 
-
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     // Navigation
-    def nav_version = "2.5.1"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
     //Pagging
-    implementation'androidx.paging:paging-runtime:3.1.1'
+    implementation 'androidx.paging:paging-runtime:3.1.1'
     // Feature module Support
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.5.3"
     // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:$nav_version"
-    }
+    implementation "androidx.navigation:navigation-compose:2.5.3"
+
+    //koin
+//    implementation 'org.koin:koin-android:3.2.0'
+//    implementation 'org.koin:koin-android-viewmodel:3.2.0'
+//    implementation 'org.koin:koin-android-scope:3.2.0'
+//    implementation 'io.insert-koin:koin-android:3.1.2'
+
+    //Dagger
+//    implementation 'com.google.dagger:dagger:2.44'
+//    kapt 'com.google.dagger:dagger-compiler:2.44'
+}

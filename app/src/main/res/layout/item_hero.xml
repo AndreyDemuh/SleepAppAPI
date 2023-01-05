@@ -18,25 +18,14 @@
             android:id="@+id/cardHero"
             android:layout_width="@dimen/dp_170"
             android:layout_height="@dimen/dp_170"
-            app:cardCornerRadius="@dimen/dp_20">
+            app:cardElevation="30dp"
+            app:cardCornerRadius="@dimen/dp_20" >
 
             <ImageView
                 android:id="@+id/imageHero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/todo" />
-
-            <ImageView
-                android:id="@+id/btn_like"
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_140"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/heart_black"
-                android:contentDescription="@string/todo"
-                android:padding="@dimen/dp_8"
-                app:layout_constraintEnd_toEndOf="@+id/imageHero"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.cardview.widget.CardView>
 
@@ -49,7 +38,7 @@
             android:fontFamily="@font/headland_one"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold"
-            tools:text="Тут какой то текст" />
+            tools:text="@string/name" />
 
     </LinearLayout>
 

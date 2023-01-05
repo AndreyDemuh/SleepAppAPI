@@ -21,7 +21,7 @@ class Network {
             .client(OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
-                    }
+                }
                 )
                 .build())
             .addConverterFactory(GsonConverterFactory.create())
