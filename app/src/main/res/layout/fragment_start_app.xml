@@ -16,11 +16,11 @@
         android:gravity="center"
         android:text="@string/welcome"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/sp_30"
+        android:textSize="@dimen/sp_36"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="wrap_content"

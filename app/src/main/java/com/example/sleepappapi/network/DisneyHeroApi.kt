@@ -1,6 +1,7 @@
 package com.example.sleepappapi.network
 
 import com.example.sleepappapi.model.AllHeroCategory
+import com.example.sleepappapi.model.CharactersHero
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,6 +16,5 @@ interface DisneyHeroApi {
     ): Response<AllHeroCategory>
 
     @GET("/characters/{id}")
-    suspend fun getImageHero(@Path("id") id: String): Response<AllHeroCategory>
-
+    suspend fun getImageHero(@Path("id") id: String): Response<CharactersHero>
 }

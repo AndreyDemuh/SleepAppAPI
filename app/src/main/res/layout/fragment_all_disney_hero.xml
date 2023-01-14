@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <com.example.sleepappapi.ui.BannerView
-        android:id="@+id/bannerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <FrameLayout
         android:id="@+id/idFragmentCharacter"
         android:layout_width="match_parent"
@@ -24,10 +15,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_22"
+                android:gravity="center"
+                android:text="@string/list_all_hero"
+                android:textSize="@dimen/sp_30"
+                android:textStyle="italic|bold"
+                app:layout_constraintBottom_toTopOf="@+id/btn_myLike"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_all"
@@ -83,7 +86,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerAllHero"
                 android:layout_width="match_parent"
@@ -96,6 +98,15 @@
                 tools:listitem="@layout/item_hero" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.example.sleepappapi.ui.BannerView
+            android:id="@+id/bannerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </FrameLayout>
 

@@ -1,7 +1,7 @@
 package com.example.sleepappapi.ui.allBase
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentAllDisneyHeroBinding
 import com.example.sleepappapi.model.CharactersHero
-import com.example.sleepappapi.ui.adapter.allBase.AllHeroesAdapter
-import com.example.sleepappapi.ui.hero.OneHeroCardFragment.Companion.getHeroFragmentInstance
+import com.example.sleepappapi.ui.allHeroes.adapter.AllHeroesAdapter
+import com.example.sleepappapi.ui.allHeroes.adapter.FavouriteHeroesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,6 +26,9 @@ class AllDisneyHeroFragment : Fragment() {
 
     private lateinit var binding: FragmentAllDisneyHeroBinding
     private val viewModel: AllCharactersViewModel by viewModels()
+
+    lateinit var recyclerView: RecyclerView
+    lateinit var recyclerFavouriteHero: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +42,25 @@ class AllDisneyHeroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnMyLike.setOnClickListener {
+            initFavouriteHero()
+            binding.btnMyLike.setImageResource(R.drawable.heart_like)
+            binding.titleText.text = "Список любимых героев"
+            ObjectAnimator.ofFloat(binding.btnMyLike, View.ALPHA, 0.2F, 1F).start()
+        }
+
+        binding.btnAll.setOnClickListener {
+            viewModel.getAllDisneyHero()
+            lifecycleScope.launch {
+                viewModel.flowHero.collectLatest { pagingData ->
+                    initHero(pagingData)
+                }
+            }
+            binding.btnMyLike.setImageResource(R.drawable.heart_disslike)
+            binding.titleText.text = "Список всех героев"
+            ObjectAnimator.ofFloat(binding.btnAll, View.ALPHA, 0.2F, 1F).start()
+        }
+
         viewModel.onError = {
             binding.bannerView.post {
                 binding.bannerView.visibility = View.VISIBLE
@@ -47,7 +70,7 @@ class AllDisneyHeroFragment : Fragment() {
                 binding.bannerView.setClickOk {
                     binding.progress.visibility = View.GONE
                     binding.recyclerAllHero.visibility = View.VISIBLE
-                    viewModel.getDisneyHeroCharacters()
+                    viewModel.getAllDisneyHero()
                 }
             }
         }
@@ -57,17 +80,37 @@ class AllDisneyHeroFragment : Fragment() {
                 initHero(pagingData)
             }
         }
-        viewModel.getDisneyHeroCharacters()
+    }
+
+    private fun initFavouriteHero() {
+        viewModel.getListFavouriteHero()
+        recyclerFavouriteHero = binding.recyclerAllHero
+        recyclerFavouriteHero.run {
+            adapter = FavouriteHeroesAdapter {
+                findNavController().navigate(
+                    AllDisneyHeroFragmentDirections
+                        .actionAllDisneyHeroFragmentToOneHeroCardFragment(
+                            it.id.toString(),
+                            it.name
+                        )
+                )
+            }
+        }
+        viewModel.listFavouriteHero.observe(viewLifecycleOwner) { list ->
+            (recyclerFavouriteHero.adapter as FavouriteHeroesAdapter).setListFavouriteHero(list)
+        }
     }
 
     private suspend fun initHero(list: PagingData<CharactersHero>) {
         binding.recyclerAllHero.run {
             if (adapter == null) {
                 adapter = AllHeroesAdapter {
-                    getHeroFragmentInstance(it.imageUrl.toString())
-                    Log.d("MyLog", "InitHero ${it.imageUrl.toString()}")
                     findNavController().navigate(
-                        R.id.action_allDisneyHeroFragment_to_oneHeroCardFragment
+                        AllDisneyHeroFragmentDirections
+                            .actionAllDisneyHeroFragmentToOneHeroCardFragment(
+                                it._id.toString(),
+                                it.name
+                            )
                     )
                 }
                 layoutManager = GridLayoutManager(requireContext(), 2)

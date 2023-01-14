@@ -1,12 +1,12 @@
-package com.example.sleepappapi.ui.adapter.allBase
+package com.example.sleepappapi.ui.allHeroes.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.sleepappapi.model.CharactersHero
 
-class AllHeroUtillCallback : DiffUtil.ItemCallback<CharactersHero>() {
+class AllHeroUtilCallback : DiffUtil.ItemCallback<CharactersHero>() {
     override fun areItemsTheSame(
         oldItem: CharactersHero, newItem: CharactersHero
-    ): Boolean {
+    ) : Boolean {
         return oldItem._id == newItem._id
     }
 

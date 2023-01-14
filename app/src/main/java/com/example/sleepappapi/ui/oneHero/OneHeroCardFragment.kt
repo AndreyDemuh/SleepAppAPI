@@ -2,27 +2,32 @@ package com.example.sleepappapi.ui.hero
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.sleepappapi.Hero
+import com.example.sleepappapi.InfoHero
 import com.example.sleepappapi.R
 import com.example.sleepappapi.databinding.FragmentCardHeroBinding
+import com.example.sleepappapi.repository.SaveSharedPref
+import com.example.sleepappapi.ui.oneHero.adapter.InfoHeroAdapter
 import dagger.hilt.android.AndroidEntryPoint
-
-private const val ID_HERO = "idHero"
 
 @AndroidEntryPoint
 class OneHeroCardFragment : Fragment() {
 
     private lateinit var binding: FragmentCardHeroBinding
     private val viewModel: OneHeroViewModel by viewModels()
+    private val args: OneHeroCardFragmentArgs by navArgs()
+    private var isFavouriteHeroIcon = false
+
+    lateinit var currentHero: Hero
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,41 +45,60 @@ class OneHeroCardFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.isHeroFavourite.observe(viewLifecycleOwner) {
-            binding.btnLike.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    if (it) {
-                        R.drawable.heart_like
-                    } else {
-                        R.drawable.heart_disslike
-                    }
-                )
-            )
+        binding.btnLike.setOnClickListener {
+            val saveShared = SaveSharedPref(requireContext())
+            if (!currentHero.isFavourite) {
+                binding.btnLike.setImageResource(R.drawable.heart_like)
+                saveShared.setFavourite(currentHero.id.toString(), true)
+                viewModel.chooseHeroFavourite(currentHero)
+                binding.messageView.visibility = View.VISIBLE
+                binding.messageView.setTitle("Герой успешно добавлен в избранное")
+                binding.messageView.setClickClose {
+                    binding.messageView.visibility = View.GONE
+                }
+            } else {
+                binding.btnLike.setImageResource(R.drawable.heart_disslike)
+                saveShared.setFavourite(currentHero.id.toString(), false)
+                viewModel.chooseHeroFavourite(currentHero)
+                binding.messageView.visibility = View.VISIBLE
+                binding.messageView.setTitle("Герой успешно удален из избранного")
+                binding.messageView.setClickClose {
+                    binding.messageView.visibility = View.GONE
+                }
+            }
             ObjectAnimator.ofFloat(binding.btnLike, View.ALPHA, 0.3F, 1F).start()
         }
-        binding.btnLike.setOnClickListener {
-            viewModel.chooseHeroFavourite()
-        }
-        viewModel.imageHeroUrl.observe(viewLifecycleOwner) {
-            Glide.with(requireContext())
-                .load(it)
-                .into(binding.imageHeroCard)
-        }
 
-        arguments?.getString(ID_HERO)?.let {
-            Log.d("MyLog", "getString arguments: $it")
-            viewModel.getImageOneHeroInfo(it)
+        viewModel.run {
+            val saveShared = SaveSharedPref(requireContext())
+            oneHero.observe(viewLifecycleOwner) {
+                currentHero = it
+                Glide.with(requireContext())
+                    .load(it.imageUrl)
+                    .centerCrop()
+                    .into(binding.imageHeroCard)
+                setList(it.listInfo)
+                val booleanFavourite = saveShared.getFavourite(currentHero.id.toString())
+                if (isFavouriteHeroIcon != booleanFavourite) {
+                    binding.btnLike.setImageResource(R.drawable.heart_like)
+                    isFavouriteHeroIcon = true
+                } else {
+                    binding.btnLike.setImageResource(R.drawable.heart_disslike)
+                    isFavouriteHeroIcon = false
+                }
+            }
+            binding.tvNameHero.text = args.nameHero
         }
+        viewModel.getInfoOneHero(args.idHero)
     }
 
-    companion object {
-
-        fun getHeroFragmentInstance(id: String): OneHeroCardFragment {
-            return OneHeroCardFragment().apply {
-                Log.d("MyLog", "getHeroFragmentInstance $id")
-                arguments = bundleOf(ID_HERO to id)
+    private fun setList(list: ArrayList<InfoHero>) {
+        binding.heroInfoRV.run {
+            if (adapter == null) {
+                adapter = InfoHeroAdapter()
+                layoutManager = LinearLayoutManager(requireContext())
             }
+            (adapter as? InfoHeroAdapter)?.submitList(list)
         }
     }
 }

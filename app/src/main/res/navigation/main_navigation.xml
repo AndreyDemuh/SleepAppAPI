@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_all_disney_hero">
         <action
             android:id="@+id/action_allDisneyHeroFragment_to_oneHeroCardFragment"
-            app:destination="@id/oneHeroCardFragment" />
+            app:destination="@id/oneHeroCardFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/oneHeroCardFragment"
@@ -22,7 +24,14 @@
         <action
             android:id="@+id/action_oneHeroCardFragment_to_allDisneyHeroFragment"
             app:destination="@id/allDisneyHeroFragment"
-            app:enterAnim="@anim/fade_out"/>
+            app:enterAnim="@anim/fade_out" />
+        <argument
+            android:name="id_hero"
+            app:argType="string" />
+        <argument
+            android:name="name_hero"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/startAppFragment"

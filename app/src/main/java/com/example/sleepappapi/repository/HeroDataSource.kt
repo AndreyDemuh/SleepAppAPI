@@ -3,6 +3,8 @@ package com.example.sleepappapi.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.sleepappapi.model.CharactersHero
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class HeroDataSource @Inject constructor(
@@ -17,12 +19,20 @@ class HeroDataSource @Inject constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharactersHero> {
-        val key = params.key ?: 1
-        val response = repository.getAllHeroes(key, params.loadSize)
-        return LoadResult.Page(
-            data = response.body()?.data ?: arrayListOf(),
-            prevKey = null,
-            nextKey = key + 1
-        )
+        return try {
+            val pageNumber = params.key ?: 1
+            val response = repository.getAllHeroes(pageNumber, params.loadSize)
+            val prevKey = if (pageNumber > 0) pageNumber - 1 else null
+            val nextKey = if (response.body()?.data?.isNotEmpty() == true) pageNumber + 1 else null
+            return LoadResult.Page(
+                data = response.body()?.data ?: arrayListOf(),
+                prevKey = prevKey,
+                nextKey = nextKey
+            )
+        } catch (e: IOException) {
+            LoadResult.Error(e)
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
+        }
     }
 }

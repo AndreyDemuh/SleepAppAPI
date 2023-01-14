@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <com.example.sleepappapi.MessageView
-        android:id="@+id/messageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"/>
-
     <FrameLayout
         android:id="@+id/characterOptions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageHeroCard"
@@ -55,7 +43,6 @@
                 android:layout_height="@dimen/dp_55"
                 android:layout_marginTop="@dimen/dp_50"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:alpha="0.5"
                 android:background="@drawable/btn_like"
                 android:padding="@dimen/dp_8"
                 android:src="@drawable/heart_disslike"
@@ -69,25 +56,34 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="18dp"
                 android:fontFamily="@font/headland_one"
-                android:text=""
                 android:textSize="@dimen/sp_34"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageHeroCard" />
+                app:layout_constraintTop_toBottomOf="@+id/imageHeroCard"
+                tools:text="name" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/heroFilmsRecycler"
+                android:id="@+id/heroInfoRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_8"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvNameHero" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.example.sleepappapi.MessageView
+            android:id="@+id/messageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:gravity="center|top"
+            android:visibility="gone" />
+
     </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

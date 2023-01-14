@@ -5,7 +5,7 @@ import com.example.sleepappapi.DataBase.HeroDataBase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class App : Application(){
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
